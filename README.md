@@ -115,6 +115,9 @@ Device SDK说明
         }
     });
 ```
+- [WLocation](https://github.com/woncan/device/blob/master/readme/bean.md#WLocation)
+- [SatelliteInfo](https://github.com/woncan/device/blob/master/readme/bean.md#SatelliteInfo)
+- [errCode](https://github.com/woncan/device/blob/master/readme/errCode.md)
 #### 静态记录
 ```
     //开启RTCM
