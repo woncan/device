@@ -23,6 +23,7 @@ import com.woncan.device.bean.WLocation;
 import com.woncan.device.device.DeviceInterval;
 import com.woncan.device.listener.DeviceStatesListener;
 import com.woncan.device.listener.WLocationListener;
+import com.woncan.device.uitl.LogUtil;
 import com.woncan.devicegithubsdk.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DeviceAdapter adapter = new DeviceAdapter();
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.tvLog.setMovementMethod(ScrollingMovementMethod.getInstance());
