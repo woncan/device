@@ -23,7 +23,7 @@ import com.woncan.device.bean.WLocation;
 import com.woncan.device.device.DeviceInterval;
 import com.woncan.device.listener.DeviceStatesListener;
 import com.woncan.device.listener.WLocationListener;
-import com.woncan.device.uitl.LogUtil;
+
 import com.woncan.devicegithubsdk.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
