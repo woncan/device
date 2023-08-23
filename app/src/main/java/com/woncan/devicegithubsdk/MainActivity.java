@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onDeviceAccountChange(@NonNull DeviceNtripAccount account) {
-                super.onDeviceAccountChange(account);
 
             }
 

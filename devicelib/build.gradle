@@ -48,11 +48,10 @@ dependencies {
     implementation files('libs/cmcc.jar')
     implementation files('libs/qx.jar')
     implementation files('libs/sixents.jar')
-    implementation files('libs/kotlin-stdlib-1.9.0.jar')
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     implementation files('libs/serial.jar')
     implementation files('libs/okhttp-4.9.3.jar')
-    implementation files('libs/okio-3.0.0.jar')
+    implementation files('libs/okio-2.8.0.jar')
 }
 
 afterEvaluate {
