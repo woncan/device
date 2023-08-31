@@ -1,5 +1,7 @@
 package com.woncan.devicegithubsdk;
 
+import static java.lang.Thread.sleep;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ import com.woncan.device.bean.DeviceNtripAccount;
 import com.woncan.device.bean.WLocation;
 import com.woncan.device.device.DeviceInterval;
 import com.woncan.device.listener.DeviceStatesListener;
+import com.woncan.device.listener.NMEAListener;
 import com.woncan.device.listener.WLocationListener;
 
 import com.woncan.devicegithubsdk.databinding.ActivityMainBinding;
@@ -95,12 +98,19 @@ public class MainActivity extends AppCompatActivity {
         device.registerLocationListener(new WLocationListener() {
             @Override
             public void onReceiveLocation(@NonNull WLocation wLocation) {
+                Log.i(TAG, "onReceiveLocation: wLocation");
                 binding.tvLocation.setText(String.format(Locale.CHINA, "纬度：%.8f\n经度：%.8f\n海拔：%.3f\n解状态：%d", wLocation.getLatitude(), wLocation.getLongitude(), wLocation.getAltitude(), wLocation.getFixStatus()));
             }
 
             @Override
             public void onError(int i, @NonNull String s) {
                 binding.tvLog.append(String.format(Locale.CHINA, "onError:%d  %s\n", i, s));
+            }
+        });
+        device.setNMEAListener(new NMEAListener() {
+            @Override
+            public void onReceiveNMEA(String s) {
+                Log.i(TAG, "onReceiveNMEA: "+s);
             }
         });
 //        device.openRTCM(new RTCM[]{RTCM.RTCM1074}, RTCMInterval.SECOND_3);
@@ -121,13 +131,25 @@ public class MainActivity extends AppCompatActivity {
 //
 //            }
 //        });
-        device.setInterval(DeviceInterval.HZ_5);
+
 //        device.closeRTCM();
 //        device.setLaserState(true);
 //        int port=1;
 //        device.setAccount("ip",port,"account","password","mountPoint");
-
         device.connect(this);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    sleep(2000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                device.setInterval(DeviceInterval.HZ_5);
+            }
+        }).start();
+
+//        device.setAccount("",8001,"","","AUTO");
     }
 
 
