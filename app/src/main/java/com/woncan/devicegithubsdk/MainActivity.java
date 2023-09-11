@@ -1,5 +1,7 @@
 package com.woncan.devicegithubsdk;
 
+import static java.lang.Thread.sleep;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.woncan.device.Device;
@@ -22,8 +25,9 @@ import com.woncan.device.bean.DeviceNtripAccount;
 import com.woncan.device.bean.WLocation;
 import com.woncan.device.device.DeviceInterval;
 import com.woncan.device.listener.DeviceStatesListener;
+import com.woncan.device.listener.NMEAListener;
 import com.woncan.device.listener.WLocationListener;
-import com.woncan.device.uitl.LogUtil;
+
 import com.woncan.devicegithubsdk.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
@@ -43,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.button.setOnClickListener(v -> {
+            ScanManager.cancelDiscovery(this);
+        });
         binding.tvLog.setMovementMethod(ScrollingMovementMethod.getInstance());
         binding.btnSearch.setOnClickListener(v -> {
             //搜索所有设备
@@ -94,12 +101,19 @@ public class MainActivity extends AppCompatActivity {
         device.registerLocationListener(new WLocationListener() {
             @Override
             public void onReceiveLocation(@NonNull WLocation wLocation) {
+                Log.i(TAG, "onReceiveLocation: wLocation");
                 binding.tvLocation.setText(String.format(Locale.CHINA, "纬度：%.8f\n经度：%.8f\n海拔：%.3f\n解状态：%d", wLocation.getLatitude(), wLocation.getLongitude(), wLocation.getAltitude(), wLocation.getFixStatus()));
             }
 
             @Override
             public void onError(int i, @NonNull String s) {
                 binding.tvLog.append(String.format(Locale.CHINA, "onError:%d  %s\n", i, s));
+            }
+        });
+        device.setNMEAListener(new NMEAListener() {
+            @Override
+            public void onReceiveNMEA(String s) {
+                Log.i(TAG, "onReceiveNMEA: "+s);
             }
         });
 //        device.openRTCM(new RTCM[]{RTCM.RTCM1074}, RTCMInterval.SECOND_3);
@@ -120,13 +134,25 @@ public class MainActivity extends AppCompatActivity {
 //
 //            }
 //        });
-        device.setInterval(DeviceInterval.HZ_5);
+
 //        device.closeRTCM();
 //        device.setLaserState(true);
 //        int port=1;
 //        device.setAccount("ip",port,"account","password","mountPoint");
-
         device.connect(this);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    sleep(2000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                device.setInterval(DeviceInterval.HZ_5);
+            }
+        }).start();
+
+//        device.setAccount("",8001,"","","AUTO");
     }
 
 
