@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.woncan.device.Device;
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.button.setOnClickListener(v -> {
+            ScanManager.cancelDiscovery(this);
+        });
         binding.tvLog.setMovementMethod(ScrollingMovementMethod.getInstance());
         binding.btnSearch.setOnClickListener(v -> {
             //搜索所有设备
