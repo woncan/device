@@ -50,8 +50,8 @@ dependencies {
     implementation files('libs/sixents.jar')
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     implementation files('libs/serial.jar')
-//    implementation files('libs/okhttp-4.9.3.jar')
-//    implementation files('libs/okio-2.8.0.jar')
+    implementation files('libs/okhttp-4.9.3.jar')
+    implementation files('libs/okio-2.8.0.jar')
 }
 
 afterEvaluate {
