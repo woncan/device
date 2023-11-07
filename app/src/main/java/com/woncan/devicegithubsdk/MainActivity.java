@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 //        device.closeRTCM();
 //        device.setLaserState(true);
 //        int port=1;
-//        device.setAccount("ip",port,"account","password","mountPoint");
+
         device.connect(this);
         new Thread(new Runnable() {
             @Override
