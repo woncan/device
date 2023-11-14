@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'com.woncan.devicegithubsdk'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.woncan.devicegithubsdk"
         minSdk 21
-        targetSdk 33
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
