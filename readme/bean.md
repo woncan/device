@@ -2,8 +2,8 @@
 
 | 方法名 | 说明| 备注|
 | :--| :-- | :-- |
+| getPower| 电量 |电量百分比|
 | getFixStatus| 获取定位状态 |0=无法定位；1=单点定位；5=浮点定位；4=固定定位|
-| getDiffAge| 差分延时 |单位：秒|
 |getLatitude| 纬度 |单位：度|
 | getLongitude|经度  |单位：度|
 | getAltitude|海拔高 |单位：米|
