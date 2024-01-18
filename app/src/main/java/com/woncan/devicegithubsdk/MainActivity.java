@@ -2,12 +2,6 @@ package com.woncan.devicegithubsdk;
 
 import static java.lang.Thread.sleep;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
@@ -15,19 +9,23 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.woncan.device.Device;
+import com.woncan.device.NMEA;
 import com.woncan.device.ScanManager;
 import com.woncan.device.bean.DeviceInfo;
 import com.woncan.device.bean.DeviceNtripAccount;
 import com.woncan.device.bean.WLocation;
 import com.woncan.device.device.DeviceInterval;
 import com.woncan.device.listener.DeviceStatesListener;
-import com.woncan.device.listener.NMEAListener;
 import com.woncan.device.listener.WLocationListener;
-
 import com.woncan.devicegithubsdk.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
@@ -47,9 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.button.setOnClickListener(v -> {
-            ScanManager.cancelDiscovery(this);
-        });
+        binding.button.setOnClickListener(v -> ScanManager.cancelDiscovery(this));
         binding.tvLog.setMovementMethod(ScrollingMovementMethod.getInstance());
         binding.btnSearch.setOnClickListener(v -> {
             //搜索所有设备
@@ -111,12 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 binding.tvLog.append(String.format(Locale.CHINA, "onError:%d  %s\n", i, s));
             }
         });
-        device.setNMEAListener(new NMEAListener() {
-            @Override
-            public void onReceiveNMEA(String s) {
-                Log.i(TAG, "onReceiveNMEA: "+s);
-            }
-        });
+        device.setNMEAListener(s -> Log.i(TAG, "onReceiveNMEA: "+s));
 //        device.openRTCM(new RTCM[]{RTCM.RTCM1074}, RTCMInterval.SECOND_3);
 //        device.registerRTCMAListener(new RTCMListener() {
 //            @Override
@@ -139,18 +130,24 @@ public class MainActivity extends AppCompatActivity {
 //        device.closeRTCM();
 //        device.setLaserState(true);
 //        int port=1;
+        device.setNMEAEnable(NMEA.GGA , true);
+        device.setNMEAEnable(NMEA.GSV , true);
+        device.setNMEAEnable(NMEA.GSA , true);
+        device.setNMEAEnable(NMEA.GLL , true);
+        device.setNMEAEnable(NMEA.GMC , true);
+        device.setNMEAEnable(NMEA.VTG , true);
 
+        device.setNMEAListener(s -> {
+
+        });
         device.connect(this);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    sleep(2000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                device.setInterval(DeviceInterval.HZ_5);
+        new Thread(() -> {
+            try {
+                sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
+            device.setInterval(DeviceInterval.HZ_5);
         }).start();
 
 //        device.setAccount("",8001,"","","AUTO");

@@ -114,6 +114,19 @@ Device SDK说明
             //卫星数据
         }
     });
+    //NMEA数据
+    device.setNMEAEnable(NMEA.GSV , true);
+    device.setNMEAEnable(NMEA.GSA , true);
+    device.setNMEAEnable(NMEA.GLL , true);
+    device.setNMEAEnable(NMEA.GMC , true);
+    device.setNMEAEnable(NMEA.VTG , true);
+
+    device.setNMEAListener(new NMEAListener() {
+        @Override
+        public void onReceiveNMEA(String s) {
+            //NMEA数据
+        }
+    });
 ```
 - [WLocation](https://github.com/woncan/device/blob/master/readme/bean.md#WLocation)
 - [SatelliteInfo](https://github.com/woncan/device/blob/master/readme/bean.md#SatelliteInfo)
