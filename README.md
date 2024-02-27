@@ -1,6 +1,6 @@
 # Device
 
-Device SDK Description
+Device SDK Description  [中文文档](https://github.com/woncan/device/blob/master/readme/README_CN.md)
 
 ##### Integrate SDK with Gradle
 
