@@ -1,17 +1,17 @@
 # Device
 
-Device SDK Description
+Device SDK说明
 
-##### Integrate SDK with Gradle
+##### Gradle集成SDK
 
-######  1.1 Configure repositories in the build.gradle file of the Project, and add the Maven repository ddress. (For the latest version of Android Studio, the repository address needs to be configured in the settings.gradle file.)
+######  1.1在Project的build.gradle文件中配置repositories，添加maven仓库地址（新版本Android studio需要在settings.gradle里面配置）
 ```
     repositories {
             maven { url "https://jitpack.io" }
     }
 ```
 
-###### Configure dependencies in the main project's build.gradle file.
+###### 在主工程的build.gradle文件配置dependencies
 
 [![](https://jitpack.io/v/woncan/device.svg)](https://jitpack.io/#woncan/device)
 ```
@@ -20,101 +20,101 @@ Device SDK Description
     }
 ```
 
-##### Please add obfuscation configuration.
+##### 添加混淆配置
 ```
 -keep class com.woncan.device.**{*;}
 -keep class com.cmcc.sy.hap.** { *;}
 -keep class com.qxwz.sdk.** { *;}
 -keep class com.sixents.sdk.** { *;}
 ```
-###  Use
+###  使用
 
 
 
-#### Search devices
-**Please choose one of the following options.**
-- Search all devices.
+#### 搜索设备
+**以下方式选择其一**
+- 搜索所有设备
 ```
     ScanManager.scanDevice(this, device -> {  
     });
 ```
-- Search for Bluetooth devices.
+- 搜索蓝牙设备
 ```
     ScanManager.scanBluetoothDevice(this, device -> {
     });
 ```
-- Search for USB devices.
+- 搜索串口设备
 ```
     ScanManager.scanSerialDevice(this, device -> {
     }); 
 ```
-#### Stop searching
+#### 关闭搜索
 ```
     ScanManager.stopScan(context);
 ```
 
-#### Connect and configure the device.
+#### 连接并配置设备
 ```
-    //Connect the device.
+    //连接设备
     device.connect(context);
 
-    //Set data frequency
+    //设置数据频率
     device.setInterval(DeviceInterval.HZ_5);
 
-    //Set up Ntrip account.
+    //配置Ntrip账号
     device.setAccount("ip",port,"account","password","mountPoint");
 
-    //Configure laser switch
+    //配置激光开关
     device.setLaserState(true);
 
 ```
 
-#### Register callback.
+#### 注册回调
 ```
-    //Device state
+    //设备状态
     device.registerSatesListener(new DeviceStatesListener() {
         @Override
         public void onConnectionStateChange(boolean isConnect) {
-            //Connection state
+            //连接状态
         }
 
         @Override
         public void onDeviceAccountChange(@NonNull DeviceNtripAccount account) {
-            //Ntrip account for writing to device
+            //写入设备的Ntrip账号
         }
 
         @Override
         public void onDeviceInfoChange(@NonNull DeviceInfo deviceInfo) {
-            //Device information
+            //设备信息
         }
 
         @Override
         public void onLaserStateChange(boolean isOpen) {
-            //laser switch
+            //激光开关
         }
     });
 
-    //Device positioning
+    //设备定位
     device.registerLocationListener(new WLocationListener() {
         @Override
         public void onReceiveLocation(@NonNull WLocation wLocation) {
-            //Positioning information
+            //定位信息
         }
 
         @Override
         public void onError(int i, @NonNull String s) {
-            //Error message
+            //错误信息
         }
     });
     
-    //Satellite data
+    //卫星数据
     device.registerSatelliteListener(new SatelliteListener() {
         @Override
         public void onReceiveSatellite(List<SatelliteInfo> list) {
-            //Satellite data
+            //卫星数据
         }
     });
-    //NMEA data
+    //NMEA数据
     device.setNMEAEnable(NMEA.GSV , true);
     device.setNMEAEnable(NMEA.GSA , true);
     device.setNMEAEnable(NMEA.GLL , true);
@@ -124,33 +124,33 @@ Device SDK Description
     device.setNMEAListener(new NMEAListener() {
         @Override
         public void onReceiveNMEA(String s) {
-            //NMEA data
+            //NMEA数据
         }
     });
 ```
 - [WLocation](https://github.com/woncan/device/blob/master/readme/bean.md#WLocation)
 - [SatelliteInfo](https://github.com/woncan/device/blob/master/readme/bean.md#SatelliteInfo)
 - [errCode](https://github.com/woncan/device/blob/master/readme/errCode.md)
-#### Static record
+#### 静态记录
 ```
-    //Enable RTCM
+    //开启RTCM
     device.openRTCM(new RTCM[]{RTCM.RTCM1074}, RTCMInterval.SECOND_3);
-    //Register listener
+    //注册监听
     device.registerRTCMAListener(new RTCMListener() {
         @Override
         public void onReceiveRTCM(int[] type, byte[] bytes) {
-            //type：RTCM type    bytes：RTCM data
+            //type：RTCM类型    bytes：RTCM数据
         }
 
         @Override
         public void onReceiveSFR(byte[] bytes) {
-            //SFR data
+            //SFR数据
         }
     });
-    //Please turn off the RTCM or restart the device after recording.
+    //记录完毕后关闭RTCM 或者 重启设备
     device.closeRTCM();
 ```
-#### disconnect
+#### 断开连接
 ```
     device.disconnect();
 
