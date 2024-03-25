@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         binding.button.setOnClickListener(v -> ScanManager.cancelDiscovery(this));
         binding.tvLog.setMovementMethod(ScrollingMovementMethod.getInstance());
         binding.btnSearch.setOnClickListener(v -> {
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             adapter.setNewInstance(null);
+            adapter.addData(ScanManager.getPhoneDevice());
             ScanManager.scanDevice(this, device -> {
                 Log.i(TAG, "onCreate: " + device.getName());
                 if (!adapter.getData().contains(device)) {
