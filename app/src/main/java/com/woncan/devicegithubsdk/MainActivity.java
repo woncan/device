@@ -4,20 +4,26 @@ import static java.lang.Thread.sleep;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.woncan.device.Device;
+import com.woncan.device.Jni;
+import com.woncan.device.JniImp;
 import com.woncan.device.NMEA;
 import com.woncan.device.ScanManager;
 import com.woncan.device.bean.DeviceInfo;
@@ -28,9 +34,14 @@ import com.woncan.device.listener.DeviceStatesListener;
 import com.woncan.device.listener.WLocationListener;
 import com.woncan.devicegithubsdk.databinding.ActivityMainBinding;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "WONCAN_DEVICE_MAIN";
@@ -46,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.button.setOnClickListener(v -> ScanManager.cancelDiscovery(this));
         binding.tvLog.setMovementMethod(ScrollingMovementMethod.getInstance());
         binding.btnSearch.setOnClickListener(v -> {
             //搜索所有设备
@@ -152,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             device.setInterval(DeviceInterval.HZ_5);
         }).start();
 
-//        device.setAccount("",8001,"","","AUTO");
+        device.setAccount("210.241.63.193",81,"jacky","jacky","GNSS_TWD97");
     }
 
 
@@ -193,4 +203,11 @@ public class MainActivity extends AppCompatActivity {
         resultLauncher.launch(list.toArray(new String[0]));
         return list.size() == 0;
     }
+
+
+
+
+
+
+
 }
