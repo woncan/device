@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
             ScanManager.stopScan(MainActivity.this);
             connect(adapter.getItem(position));
         });
+
     }
 
 
