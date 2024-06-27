@@ -6,8 +6,8 @@
 | getFixStatus| 获取定位状态 |0=无法定位；1=单点定位；5=浮点定位；4=固定定位|
 |getLatitude| 纬度 |单位：度|
 | getLongitude|经度  |单位：度|
-| getAltitude|海拔高 |单位：米|
-| getAltitudeCorr|高程异常值 |大地高=海拔高+高程异常值|
+| getAltitude|大地高 |单位：米|
+| getAltitudeCorr|高程异常值 |正常高=大地高-高程异常值|
 | getnSatsInView| 卫星数 |
 | getnSatsInUse| 参与解算的卫星数 |
 | getTime| 时间戳 |
