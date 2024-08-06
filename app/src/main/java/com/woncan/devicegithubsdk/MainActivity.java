@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             device.setInterval(DeviceInterval.HZ_5);
         }).start();
 
-        device.setAccount("210.241.63.193",81,"jacky","jacky","GNSS_TWD97");
+//        device.setAccount("",0,"","","");
     }
 
 
