@@ -30,8 +30,10 @@ import com.woncan.device.bean.DeviceInfo;
 import com.woncan.device.bean.DeviceNtripAccount;
 import com.woncan.device.bean.WLocation;
 import com.woncan.device.device.DeviceInterval;
+import com.woncan.device.listener.AttachmentStateListener;
 import com.woncan.device.listener.DeviceStatesListener;
 import com.woncan.device.listener.WLocationListener;
+import com.woncan.device.uitl.AttachmentState;
 import com.woncan.devicegithubsdk.databinding.ActivityMainBinding;
 
 import java.io.IOException;
@@ -73,6 +75,21 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         });
+        binding.btnAttach.setOnClickListener(v -> {
+            if (mDevice==null){
+                return;
+            }
+            mDevice.registerAttachmentStateListener(this, attachmentState -> {
+                Log.i(TAG, "onCreate: "+attachmentState);
+            });
+        });
+        binding.btnDetach.setOnClickListener(v -> {
+            if (mDevice==null){
+                return;
+            }
+            mDevice.unregisterAttachmentStateListener(this);
+        });
+
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setAdapter(adapter);
@@ -80,14 +97,22 @@ public class MainActivity extends AppCompatActivity {
             ScanManager.stopScan(MainActivity.this);
             connect(adapter.getItem(position));
         });
+
     }
 
+
+    private Device mDevice=null;
 
     private void connect(Device device) {
         device.registerSatesListener(new DeviceStatesListener() {
             @Override
             public void onConnectionStateChange(boolean isConnect) {
                 binding.tvLog.append(isConnect ? "设备已连接\n" : "断开连接\n");
+                if (isConnect){
+                    mDevice=device;
+                }else {
+                    mDevice=null;
+                }
             }
 
             @Override
