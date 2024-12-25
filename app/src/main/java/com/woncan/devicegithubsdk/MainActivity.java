@@ -4,26 +4,20 @@ import static java.lang.Thread.sleep;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.woncan.device.Device;
-import com.woncan.device.Jni;
-import com.woncan.device.JniImp;
 import com.woncan.device.NMEA;
 import com.woncan.device.ScanManager;
 import com.woncan.device.bean.DeviceInfo;
@@ -32,16 +26,12 @@ import com.woncan.device.bean.WLocation;
 import com.woncan.device.device.DeviceInterval;
 import com.woncan.device.listener.DeviceStatesListener;
 import com.woncan.device.listener.WLocationListener;
+import com.woncan.device.util.LogUtil;
 import com.woncan.devicegithubsdk.databinding.ActivityMainBinding;
 
-import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "WONCAN_DEVICE_MAIN";
@@ -84,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void connect(Device device) {
+        LogUtil.INSTANCE.setShowLog(true);
         device.registerSatesListener(new DeviceStatesListener() {
             @Override
             public void onConnectionStateChange(boolean isConnect) {
@@ -119,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 binding.tvLog.append(String.format(Locale.CHINA, "onError:%d  %s\n", i, s));
             }
         });
-        device.setNMEAListener(s -> Log.i(TAG, "onReceiveNMEA: "+s));
+//        device.setNMEAListener(s -> Log.i(TAG, "onReceiveNMEA: "+s));
 //        device.openRTCM(new RTCM[]{RTCM.RTCM1074}, RTCMInterval.SECOND_3);
 //        device.registerRTCMAListener(new RTCMListener() {
 //            @Override
