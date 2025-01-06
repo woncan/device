@@ -5,11 +5,11 @@ plugins {
 group = 'com.github.woncan'
 android {
     namespace 'com.woncan.devicelib'
-    compileSdk 34
+    compileSdk 33
 
     defaultConfig {
         minSdk 21
-        targetSdk 34
+        targetSdk 33
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -39,7 +39,6 @@ android {
     }
 
 }
-
 
 dependencies {
     api files('libs/device.jar')
