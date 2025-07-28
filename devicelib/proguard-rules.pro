@@ -21,5 +21,5 @@
 #-renamesourcefileattribute SourceFile
 -keep class com.woncan.device.**{*;}
 -keep class com.cmcc.sy.hap.** { *;}
--keep class com.qxwz.sdk.** { *;}
+#-keep class com.qxwz.sdk.** { *;}
 -keep class com.sixents.sdk.** { *;}

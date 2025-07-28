@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "需要蓝牙和定位权限", Toast.LENGTH_SHORT).show();
                 return;
             }
+
             adapter.setNewInstance(null);
             adapter.addData(ScanManager.getPhoneDevice());
             ScanManager.scanDevice(this, device -> {
