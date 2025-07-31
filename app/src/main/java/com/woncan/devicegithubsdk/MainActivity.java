@@ -28,6 +28,7 @@ import com.woncan.device.device.DeviceInterval;
 import com.woncan.device.listener.DeviceStatesListener;
 import com.woncan.device.listener.SatelliteListener;
 import com.woncan.device.listener.WLocationListener;
+import com.woncan.device.util.AttachmentState;
 import com.woncan.devicegithubsdk.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             mDevice.registerAttachmentStateListener(this, attachmentState -> {
-                Log.i(TAG, "onCreate: "+attachmentState);
+                Log.i(TAG, "onCreate: "+(attachmentState == AttachmentState.Attached));
             });
         });
         binding.btnDetach.setOnClickListener(v -> {
