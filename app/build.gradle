@@ -44,5 +44,5 @@ dependencies {
     implementation 'io.github.cymchad:BaseRecyclerViewAdapterHelper:3.0.14'
 //    implementation project(path: ':devicelib')
 //    implementation 'com.github.woncan:device:1.0.0'
-    implementation 'com.github.woncan:device:22e0f39ad4'
+    implementation 'com.github.woncan:device:7b04c16791'
 }
