@@ -107,7 +107,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onError(int i, @NonNull String s) {
-                binding.tvLog.append(String.format(Locale.CHINA, "onError:%d  %s\n", i, s));
+                runOnUiThread(() -> {
+	                binding.tvLog.append(String.format(Locale.CHINA, "onError:%d  %s\n", i, s));
+                });
             }
         });
         device.setNMEAListener(new NMEAListener() {
