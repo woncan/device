@@ -1,2 +1,4 @@
 jdk:
   - openjdk17
+install:
+  - bash scripts/install-jitpack.sh
